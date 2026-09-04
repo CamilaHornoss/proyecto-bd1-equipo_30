@@ -1,6 +1,6 @@
 Etapa I: Requerimientos y Dominio del Negocio (Sin Proveedores)
 1. Descripción del Caso y Alcance del Sistema
-Tienda OGA es un emprendimiento comercial polirrubro dedicado a la venta minorista directa de artículos variados, abarcando electrónica y tecnología (tablets, cámaras de seguridad, tiras de luces LED neón, cortadoras de pelo para mascotas) y artículos para el hogar y ferretería (griferías, secaplatos, picaportes).
+Tienda OGA es un emprendimiento comercial polirrubro dedicado a la venta minorista directa de artículos variados, abarcando electrónica y tecnología (tablets, cámaras de seguridad, tiras de luces LED neón, cortadoras de pelo para mascotas, etc.) y artículos para el hogar y ferretería (griferías, secaplatos, picaportes, etc.).
 
 El crecimiento sostenido en las consultas y pedidos a través de canales digitales y ventas presenciales hace indispensable sustituir las planillas de cálculo por un sistema de información centralizado. El sistema resolverá los problemas comunes de desfasaje de inventario, errores al calcular totales y la dispersión en los registros de cobros multicanal.
 
