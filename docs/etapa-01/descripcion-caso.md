@@ -1,10 +1,10 @@
-# Descripción del Caso
+Descripción del caso
 
-## Nombre del equipo
+Nombre del equipo
 
 Grupo 30
 
-## Integrantes
+Integrantes
 
 - Gómez, Christian Gabriel Jesús
 - Gómez, Selenia Agustina
@@ -12,11 +12,11 @@ Grupo 30
 - Hernández González, Camila
 - Hornos, Camila Paloma
 
-## Título del tema
+Título del tema
 
-**Sistema de Gestión de Ventas, Control de Stock y Cobranzas para Comercio Minorista Polirrubro (Tienda OGA).**
+Sistema de Gestión de Ventas, Control de Stock y Cobranzas para Comercio Minorista Polirrubro (Tienda OGA).
 
-## Descripción del caso
+Descripción del caso
 
 Tienda OGA es un emprendimiento comercial polirrubro dedicado a la venta minorista directa de artículos variados, abarcando electrónica y tecnología (tablets, cámaras de seguridad, tiras de luces LED neón, entre otros) y productos para el hogar y ferretería (griferías, secaplatos, picaportes, entre otros).
 
