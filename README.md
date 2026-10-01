@@ -10,7 +10,6 @@
 
 [![Last Commit](https://img.shields.io/github/last-commit/CamilaHornoss/proyecto-bd1-equipo_30?style=for-the-badge&logo=git&logoColor=white&color=7c3aed)](https://github.com/CamilaHornoss/proyecto-bd1-equipo_30/commits/main)
 [![Commits](https://img.shields.io/github/commit-activity/t/CamilaHornoss/proyecto-bd1-equipo_30?style=for-the-badge&logo=github&logoColor=white&color=10b981)](https://github.com/CamilaHornoss/proyecto-bd1-equipo_30/commits/main)
-[![Issues](https://img.shields.io/github/issues/CamilaHornoss/proyecto-bd1-equipo_30?style=for-the-badge&logo=github&logoColor=white&color=f59e0b)](https://github.com/CamilaHornoss/proyecto-bd1-equipo_30/issues)
 ![SQL Server](https://img.shields.io/badge/SQL%20Server-T--SQL-CC292B?style=for-the-badge&logo=databricks&logoColor=white)
 ![ERDPlus](https://img.shields.io/badge/ERDPlus-Modelado%20DER-0ea5e9?style=for-the-badge&logo=diagramsdotnet&logoColor=white)
 ![GitHub](https://img.shields.io/badge/Git%20%26%20GitHub-Control%20de%20versiones-181717?style=for-the-badge&logo=github&logoColor=white)
@@ -19,8 +18,7 @@
 </div>
 
 ---
-<div align="center">
-  
+
 ![Infografía Tienda OGA](https://github.com/user-attachments/assets/28ef8640-dde2-497b-95b0-6c0df0e6ea0b)
 
 ---
@@ -60,8 +58,8 @@ El proyecto contempla principalmente:
 | :--- | :--- | :--- | :--- | :---: |
 | **I. Requerimientos** | ¿Qué necesita el negocio? | Requerimientos + reglas | `docs/etapa-01/` | ✅ |
 | **II. Modelado** | ¿Cómo representamos la información? | DER + modelo relacional + 3FN | `docs/etapa-02/` | ✅ |
-| **III. Implementación** | ¿Cómo construimos la BD? | DDL + DML | `docs/etapa-03/` + `sql/ddl/` + `sql/dml/` | 🚧 |
-| **IV. Consultas** | ¿Cómo obtenemos información? | SQL + casos de uso | `docs/etapa-04/` + `sql/consultas/` | ⏳ |
+| **III. Implementación** | ¿Cómo construimos la BD? | DDL + DML | `docs/etapa-03/` + `sql/ddl/` + `sql/dml/` | ✅ |
+| **IV. Consultas** | ¿Cómo obtenemos información? | SQL + casos de uso | `docs/etapa-04/` + `sql/consultas/` | 🚧 |
 | **V. Temas técnicos** | ¿Cómo hacemos la solución más robusta? | Procedimientos, funciones, transacciones, triggers, seguridad e índices | `docs/etapa-05/` + `sql/tecnico/` | ⏳ |
 
 ---
