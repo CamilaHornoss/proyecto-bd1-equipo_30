@@ -1,98 +1,454 @@
-MODELO RELACIONAL DE DATOS
-
-A continuacion se detalla la especificacion formal del esquema relacional obtenido a partir del diagrama, indicando claves primarias (PK), claves foraneas (FK), atributos y restricciones de integridad referencial.
+\# MODELO RELACIONAL DE DATOS
 
 
-1. ESQUEMA TEXTUAL DE RELACIONES
 
-- Categorias (PK: id_categoria, descripcion)
-
-- Producto (PK: id_producto, stock_actual, descripcion, precio_lista, FK: id_categoria)
-  FK id_categoria referencia a Categorias(id_categoria)
-
-- Proveedor (PK: cuit_proveedor, nombre_proveedor, telefono)
-
-- Compra (PK: id_compra, fecha, hora, estado_pedido, FK: cuit_proveedor)
-  FK cuit_proveedor referencia a Proveedor(cuit_proveedor)
-
-- detalle_compra (PK/FK: id_producto, PK/FK: id_compra, precio_compra, cantidad_compra)
-  FK id_producto referencia a Producto(id_producto)
-  FK id_compra referencia a Compra(id_compra)
-
-- Cliente (PK: dni_cliente, nombre, apellido, telefono, calle, altura, localidad)
-
-- Venta (PK: id_venta, fecha, hora, estado_pedido, FK: dni_cliente)
-  FK dni_cliente referencia a Cliente(dni_cliente)
-
-- Venta_detalle (PK/FK: id_producto, PK/FK: id_venta, precio_unitario, cantidad)
-  FK id_producto referencia a Producto(id_producto)
-  FK id_venta referencia a Venta(id_venta)
-
-- Metodo_pago (PK: id_metodo, nombre_metodo)
-
-- Pago (PK/FK: id_venta, PK/FK: id_metodo, Monto)
-  FK id_venta referencia a Venta(id_venta)
-  FK id_metodo referencia a Metodo_pago(id_metodo)
+A continuación se detalla la especificación formal del esquema relacional obtenido a partir del diagrama, indicando claves primarias (PK), claves foráneas (FK), atributos y restricciones de integridad referencial.
 
 
-2. DICCIONARIO DE DATOS
 
-TABLA: Categorias
-- id_categoria (PK): Identificador numerico unico de la categoria.
-- descripcion: Nombre o descripcion de la categoria.
+\## ESQUEMA TEXTUAL DE RELACIONES
 
-TABLA: Producto
-- id_producto (PK): Codigo unico identificador del producto.
-- stock_actual: Cantidad fisica disponible en inventario.
-- descripcion: Detalle descriptivo o nombre del producto.
-- precio_lista: Precio base vigente para la venta.
-- id_categoria (FK): Categoria a la que pertenece el producto.
 
-TABLA: Proveedor
-- cuit_proveedor (PK): CUIT identificatorio fiscal del proveedor.
-- nombre_proveedor: Razon social o nombre comercial.
-- telefono: Numero de contacto del proveedor.
 
-TABLA: Compra
-- id_compra (PK): Identificador univoco del comprobante u orden de compra.
-- fecha: Fecha de realizacion de la compra.
-- hora: Hora exacta del registro de compra.
-- estado_pedido: Estado logistico y administrativo de la orden.
-- cuit_proveedor (FK): Proveedor al que se le realizo la compra.
+\*\*Categorias\*\* (
 
-TABLA: detalle_compra
-- id_producto (PK, FK): Producto adquirido en la orden de compra.
-- id_compra (PK, FK): Orden de compra asociada.
-- precio_compra: Precio unitario de costo pactado en esa compra puntual.
-- cantidad_compra: Unidades adquiridas en el pedido.
+PK: id\_categoria,
 
-TABLA: Cliente
-- dni_cliente (PK): Documento Nacional de Identidad del cliente.
-- nombre: Nombres de pila del cliente.
-- apellido: Apellidos del cliente.
-- telefono: Telefono de contacto.
-- calle: Nombre de la arteria del domicilio.
-- altura: Numeracion catastral de la direccion.
-- localidad: Ciudad o localidad de residencia.
+nombre\_categoria
 
-TABLA: Venta
-- id_venta (PK): Identificador univoco de la transaccion de venta.
-- fecha: Fecha de emision de la venta.
-- hora: Hora de concrecion de la venta.
-- estado_pedido: Estado del pedido (pendiente, entregado, cancelado).
-- dni_cliente (FK): Cliente que realizo la compra.
+)
 
-TABLA: Venta_detalle
-- id_producto (PK, FK): Producto vendido en la transaccion.
-- id_venta (PK, FK): Venta asociada.
-- precio_unitario: Precio historico de venta unitario al momento del cobro.
-- cantidad: Cantidad de unidades vendidas.
 
-TABLA: Metodo_pago
-- id_metodo (PK): Identificador unico del medio de cobro o pago.
-- nombre_metodo: Denominacion del metodo (Efectivo, Transferencia, Tarjeta).
 
-TABLA: Pago
-- id_venta (PK, FK): Venta que se esta cancelando o abonando.
-- id_metodo (PK, FK): Medio de pago utilizado.
-- Monto: Importe asignado a ese metodo de pago puntual.
+\*\*Producto\*\* (
+
+PK: id\_producto,
+
+stock\_actual,
+
+descripcion,
+
+precio\_lista,
+
+precio\_compra,
+
+FK: id\_categoria
+
+)
+
+
+
+FK `id\_categoria` referencia a `Categorias(id\_categoria)`.
+
+
+
+\*\*Proveedor\*\* (
+
+PK: id\_proveedor,
+
+nombre\_proveedor,
+
+telefono,
+
+cuit\_proveedor
+
+)
+
+
+
+\*\*Compra\*\* (
+
+PK: id\_compra,
+
+fecha\_compra,
+
+hora\_compra,
+
+estado\_pedido,
+
+FK: id\_proveedor
+
+)
+
+
+
+FK `id\_proveedor` referencia a `Proveedor(id\_proveedor)`.
+
+
+
+\*\*detalle\_compra\*\* (
+
+PK/FK: id\_producto,
+
+PK/FK: id\_compra,
+
+precio\_unitario\_compra,
+
+cantidad\_compra
+
+)
+
+
+
+FK `id\_producto` referencia a `Producto(id\_producto)`.  
+
+FK `id\_compra` referencia a `Compra(id\_compra)`.
+
+
+
+\*\*Cliente\*\* (
+
+PK: dni\_cliente,
+
+nombre\_cliente,
+
+apellido\_cliente,
+
+telefono\_cliente,
+
+calle,
+
+altura,
+
+localidad
+
+)
+
+
+
+\*\*Venta\*\* (
+
+PK: id\_venta,
+
+fecha\_venta,
+
+hora\_venta,
+
+estado\_pedido,
+
+FK: dni\_cliente
+
+)
+
+
+
+FK `dni\_cliente` referencia a `Cliente(dni\_cliente)`.
+
+
+
+\*\*Venta\_detalle\*\* (
+
+PK/FK: id\_producto,
+
+PK/FK: id\_venta,
+
+precio\_unitario,
+
+cantidad
+
+)
+
+
+
+FK `id\_producto` referencia a `Producto(id\_producto)`.  
+
+FK `id\_venta` referencia a `Venta(id\_venta)`.
+
+
+
+\*\*Metodo\_pago\*\* (
+
+PK: id\_metodo,
+
+nombre\_metodo
+
+)
+
+
+
+\*\*pago\*\* (
+
+PK/FK: id\_venta,
+
+PK/FK: id\_metodo,
+
+monto
+
+)
+
+
+
+FK `id\_venta` referencia a `Venta(id\_venta)`.  
+
+FK `id\_metodo` referencia a `Metodo\_pago(id\_metodo)`.
+
+
+
+
+
+\# DICCIONARIO DE DATOS
+
+
+
+\## TABLA: Categorias
+
+
+
+\*\*id\_categoria (PK):\*\* Identificador numérico único de la categoría.  
+
+
+
+\*\*nombre\_categoria:\*\* Nombre que identifica la categoría a la que pertenecen los productos.
+
+
+
+
+
+\## TABLA: Producto
+
+
+
+\*\*id\_producto (PK):\*\* Código único identificador del producto.  
+
+
+
+\*\*stock\_actual:\*\* Cantidad física disponible actualmente en inventario.  
+
+
+
+\*\*descripcion:\*\* Descripción o detalle del producto.  
+
+
+
+\*\*precio\_lista:\*\* Precio vigente establecido para la venta del producto.  
+
+
+
+\*\*precio\_compra:\*\* Precio de referencia o costo de compra del producto.  
+
+
+
+\*\*id\_categoria (FK):\*\* Identificador de la categoría a la que pertenece el producto. Referencia a `Categorias(id\_categoria)`.
+
+
+
+
+
+\## TABLA: Proveedor
+
+
+
+\*\*id\_proveedor (PK):\*\* Identificador único del proveedor dentro del sistema.  
+
+
+
+\*\*nombre\_proveedor:\*\* Razón social o nombre comercial del proveedor.  
+
+
+
+\*\*telefono:\*\* Número de contacto del proveedor.  
+
+
+
+\*\*cuit\_proveedor:\*\* CUIT identificatorio fiscal del proveedor.
+
+
+
+
+
+\## TABLA: Compra
+
+
+
+\*\*id\_compra (PK):\*\* Identificador único de la operación u orden de compra.  
+
+
+
+\*\*fecha\_compra:\*\* Fecha en la que se realizó la compra.  
+
+
+
+\*\*hora\_compra:\*\* Hora en la que se registró la operación de compra.  
+
+
+
+\*\*estado\_pedido:\*\* Estado actual de la orden de compra.  
+
+
+
+\*\*id\_proveedor (FK):\*\* Identificador del proveedor al cual se realizó la compra. Referencia a `Proveedor(id\_proveedor)`.
+
+
+
+
+
+\## TABLA: detalle\_compra
+
+
+
+\*\*id\_producto (PK, FK):\*\* Producto incluido en la orden de compra. Referencia a `Producto(id\_producto)`.  
+
+
+
+\*\*id\_compra (PK, FK):\*\* Compra a la que pertenece el detalle. Referencia a `Compra(id\_compra)`.  
+
+
+
+\*\*precio\_unitario\_compra:\*\* Precio unitario pagado por el producto en esa compra específica.  
+
+
+
+\*\*cantidad\_compra:\*\* Cantidad de unidades adquiridas del producto.
+
+
+
+La clave primaria de `detalle\_compra` está compuesta por `id\_producto` e `id\_compra`.
+
+
+
+
+
+\## TABLA: Cliente
+
+
+
+\*\*dni\_cliente (PK):\*\* Documento Nacional de Identidad que identifica de forma única al cliente.  
+
+
+
+\*\*nombre\_cliente:\*\* Nombre del cliente.  
+
+
+
+\*\*apellido\_cliente:\*\* Apellido del cliente.  
+
+
+
+\*\*telefono\_cliente:\*\* Número de teléfono de contacto del cliente.  
+
+
+
+\*\*calle:\*\* Nombre de la calle correspondiente al domicilio del cliente.  
+
+
+
+\*\*altura:\*\* Numeración correspondiente al domicilio del cliente.  
+
+
+
+\*\*localidad:\*\* Localidad o ciudad de residencia del cliente.
+
+
+
+
+
+\## TABLA: Venta
+
+
+
+\*\*id\_venta (PK):\*\* Identificador único de la operación de venta.  
+
+
+
+\*\*fecha\_venta:\*\* Fecha en la que se realizó la venta.  
+
+
+
+\*\*hora\_venta:\*\* Hora en la que se registró la venta.  
+
+
+
+\*\*estado\_pedido:\*\* Estado actual del pedido asociado a la venta.  
+
+
+
+\*\*dni\_cliente (FK):\*\* Cliente que realizó la compra. Referencia a `Cliente(dni\_cliente)`.
+
+
+
+
+
+\## TABLA: Venta\_detalle
+
+
+
+\*\*id\_producto (PK, FK):\*\* Producto incluido en la venta. Referencia a `Producto(id\_producto)`.  
+
+
+
+\*\*id\_venta (PK, FK):\*\* Venta a la que pertenece el detalle. Referencia a `Venta(id\_venta)`.  
+
+
+
+\*\*precio\_unitario:\*\* Precio unitario aplicado al producto en el momento de la venta.  
+
+
+
+\*\*cantidad:\*\* Cantidad de unidades vendidas.
+
+
+
+La clave primaria de `Venta\_detalle` está compuesta por `id\_producto` e `id\_venta`.
+
+
+
+
+
+\## TABLA: Metodo\_pago
+
+
+
+\*\*id\_metodo (PK):\*\* Identificador único del método de pago.  
+
+
+
+\*\*nombre\_metodo:\*\* Nombre o denominación del método de pago utilizado.
+
+
+
+
+
+\## TABLA: pago
+
+
+
+\*\*id\_venta (PK, FK):\*\* Identificador de la venta que se está abonando. Referencia a `Venta(id\_venta)`.  
+
+
+
+\*\*id\_metodo (PK, FK):\*\* Identificador del método utilizado para realizar el pago. Referencia a `Metodo\_pago(id\_metodo)`.  
+
+
+
+\*\*monto:\*\* Importe correspondiente al método de pago utilizado.
+
+
+
+La clave primaria de `pago` está compuesta por `id\_venta` e `id\_metodo`.
+
+
+
+
+
+\# RESTRICCIONES DE INTEGRIDAD REFERENCIAL
+
+
+
+\- `Producto.id\_categoria` debe existir previamente en `Categorias.id\_categoria`.
+
+\- `Compra.id\_proveedor` debe existir previamente en `Proveedor.id\_proveedor`.
+
+\- `detalle\_compra.id\_producto` debe existir previamente en `Producto.id\_producto`.
+
+\- `detalle\_compra.id\_compra` debe existir previamente en `Compra.id\_compra`.
+
+\- `Venta.dni\_cliente` debe existir previamente en `Cliente.dni\_cliente`.
+
+\- `Venta\_detalle.id\_producto` debe existir previamente en `Producto.id\_producto`.
+
+\- `Venta\_detalle.id\_venta` debe existir previamente en `Venta.id\_venta`.
+
+\- `pago.id\_venta` debe existir previamente en `Venta.id\_venta`.
+
+\- `pago.id\_metodo` debe existir previamente en `Metodo\_pago.id\_metodo`.
+
