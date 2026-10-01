@@ -19,7 +19,11 @@
 </div>
 
 ---
+<div align="center">
+  
+![Infografía Tienda OGA](https://github.com/user-attachments/assets/28ef8640-dde2-497b-95b0-6c0df0e6ea0b)
 
+---
 ## 📖 Sobre el proyecto
 
 Proyecto integrador de la asignatura **Bases de Datos I**, realizado por el **Equipo 30**.
