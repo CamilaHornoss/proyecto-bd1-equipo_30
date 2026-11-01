@@ -14,7 +14,7 @@ A continuación se detalla la especificación formal del esquema relacional obte
 
 PK: id\_categoria,
 
-nombre\_categoria
+UQ: nombre\_categoria
 
 )
 
@@ -24,13 +24,13 @@ nombre\_categoria
 
 PK: id\_producto,
 
-stock\_actual,
+UQ: descripcion\_producto,
 
-descripcion,
+stock\_actual,
 
 precio\_lista,
 
-precio\_compra,
+precio\_costo\_referencia,
 
 FK: id\_categoria
 
@@ -46,11 +46,11 @@ FK `id\_categoria` referencia a `Categorias(id\_categoria)`.
 
 PK: id\_proveedor,
 
+UQ: cuit\_proveedor
+
 nombre\_proveedor,
 
-telefono,
-
-cuit\_proveedor
+UQ: telefono\_proveedor,
 
 )
 
@@ -64,7 +64,7 @@ fecha\_compra,
 
 hora\_compra,
 
-estado\_pedido,
+estado\_compra,
 
 FK: id\_proveedor
 
@@ -76,7 +76,7 @@ FK `id\_proveedor` referencia a `Proveedor(id\_proveedor)`.
 
 
 
-\*\*detalle\_compra\*\* (
+\*\*Detalle\_compra\*\* (
 
 PK/FK: id\_producto,
 
@@ -104,7 +104,7 @@ nombre\_cliente,
 
 apellido\_cliente,
 
-telefono\_cliente,
+UQ: telefono\_cliente,
 
 calle,
 
@@ -124,7 +124,7 @@ fecha\_venta,
 
 hora\_venta,
 
-estado\_pedido,
+estado\_venta,
 
 FK: dni\_cliente
 
@@ -136,7 +136,7 @@ FK `dni\_cliente` referencia a `Cliente(dni\_cliente)`.
 
 
 
-\*\*Venta\_detalle\*\* (
+\*\*Detalle\_venta\*\* (
 
 PK/FK: id\_producto,
 
@@ -144,7 +144,7 @@ PK/FK: id\_venta,
 
 precio\_unitario,
 
-cantidad
+cantidad_venta
 
 )
 
@@ -160,19 +160,27 @@ FK `id\_venta` referencia a `Venta(id\_venta)`.
 
 PK: id\_metodo,
 
-nombre\_metodo
+UQ: nombre\_metodo
 
 )
 
 
 
-\*\*pago\*\* (
+\*\*Pago\*\* (
 
-PK/FK: id\_venta,
+PK: id\_pago,
 
-PK/FK: id\_metodo,
+FK: id\_venta,
+
+FK: id\_metodo,
+
+fecha\_pago,
+
+hora\_pago
 
 monto
+
+referencia
 
 )
 
@@ -198,7 +206,7 @@ FK `id\_metodo` referencia a `Metodo\_pago(id\_metodo)`.
 
 
 
-\*\*nombre\_categoria:\*\* Nombre que identifica la categoría a la que pertenecen los productos.
+\*\*nombre\_categoria (UQ):\*\* Denominación de la categoría (no admite duplicados).
 
 
 
@@ -216,7 +224,7 @@ FK `id\_metodo` referencia a `Metodo\_pago(id\_metodo)`.
 
 
 
-\*\*descripcion:\*\* Descripción o detalle del producto.  
+\*\*descripcion\_producto (UQ):\*\* Descripción o detalle del producto.  
 
 
 
@@ -224,7 +232,7 @@ FK `id\_metodo` referencia a `Metodo\_pago(id\_metodo)`.
 
 
 
-\*\*precio\_compra:\*\* Precio de referencia o costo de compra del producto.  
+\*\*precio\_costo\_referencia:\*\* Costo estándar o última reposición del producto.
 
 
 
@@ -242,16 +250,15 @@ FK `id\_metodo` referencia a `Metodo\_pago(id\_metodo)`.
 
 
 
-\*\*nombre\_proveedor:\*\* Razón social o nombre comercial del proveedor.  
+\*\*nombre\_proveedor:\*\* Razón social o nombre comercial.
 
 
 
-\*\*telefono:\*\* Número de contacto del proveedor.  
+\*\*telefono (UQ):\*\* Número de contacto del proveedor.  
 
 
 
-\*\*cuit\_proveedor:\*\* CUIT identificatorio fiscal del proveedor.
-
+\*\*cuit\_proveedor (UQ):\*\* Clave Única de Identificación Tributaria fiscalmente única.
 
 
 
@@ -282,7 +289,7 @@ FK `id\_metodo` referencia a `Metodo\_pago(id\_metodo)`.
 
 
 
-\## TABLA: detalle\_compra
+\## TABLA: Detalle\_compra
 
 
 
@@ -316,15 +323,15 @@ La clave primaria de `detalle\_compra` está compuesta por `id\_producto` e `id\
 
 
 
-\*\*nombre\_cliente:\*\* Nombre del cliente.  
+\*\*nombre\_cliente:\*\* Nombres del cliente.  
 
 
 
-\*\*apellido\_cliente:\*\* Apellido del cliente.  
+\*\*apellido\_cliente:\*\* Apellidos del cliente.  
 
 
 
-\*\*telefono\_cliente:\*\* Número de teléfono de contacto del cliente.  
+\*\*telefono\_cliente (UQ):\*\* Número de teléfono de contacto del cliente.  
 
 
 
@@ -358,7 +365,7 @@ La clave primaria de `detalle\_compra` está compuesta por `id\_producto` e `id\
 
 
 
-\*\*estado\_pedido:\*\* Estado actual del pedido asociado a la venta.  
+\*\*estado\_venta:\*\* Estado actual del pedido asociado a la venta.  
 
 
 
@@ -368,7 +375,7 @@ La clave primaria de `detalle\_compra` está compuesta por `id\_producto` e `id\
 
 
 
-\## TABLA: Venta\_detalle
+\## TABLA: Detalle\_venta
 
 
 
@@ -384,7 +391,7 @@ La clave primaria de `detalle\_compra` está compuesta por `id\_producto` e `id\
 
 
 
-\*\*cantidad:\*\* Cantidad de unidades vendidas.
+\*\*cantidad_venta:\*\* Cantidad de unidades vendidas.
 
 
 
@@ -402,25 +409,41 @@ La clave primaria de `Venta\_detalle` está compuesta por `id\_producto` e `id\_
 
 
 
-\*\*nombre\_metodo:\*\* Nombre o denominación del método de pago utilizado.
+\*\*nombre\_metodo (UQ):\*\* Denominación del medio (ej. Efectivo, Transferencia, Tarjeta de Débito).
 
 
 
 
 
-\## TABLA: pago
+\## TABLA: Pago
 
 
 
-\*\*id\_venta (PK, FK):\*\* Identificador de la venta que se está abonando. Referencia a `Venta(id\_venta)`.  
+\*\*id\_pago (PK):\*\* Identificador único del recibo/transacción de cobro.
 
 
 
-\*\*id\_metodo (PK, FK):\*\* Identificador del método utilizado para realizar el pago. Referencia a `Metodo\_pago(id\_metodo)`.  
+\*\*id\_venta (FK):\*\* Identificador de la venta que se está abonando. Referencia a `Venta(id\_venta)`.  
+
+
+
+\*\*id\_metodo (FK):\*\* Identificador del método utilizado para realizar el pago. Referencia a `Metodo\_pago(id\_metodo)`.  
+
+
+
+\*\*fecha\_pago:\*\* Fecha en la que se acreditó el importe.
+
+
+
+\*\*hora\_pago:\*\* Hora de registración del cobro.
 
 
 
 \*\*monto:\*\* Importe correspondiente al método de pago utilizado.
+
+
+
+\*\*referencia:\*\* Código de comprobante, número de cupón posnet o identificador de transferencia.
 
 
 
@@ -438,17 +461,17 @@ La clave primaria de `pago` está compuesta por `id\_venta` e `id\_metodo`.
 
 \- `Compra.id\_proveedor` debe existir previamente en `Proveedor.id\_proveedor`.
 
-\- `detalle\_compra.id\_producto` debe existir previamente en `Producto.id\_producto`.
+\- `Detalle\_compra.id\_producto` debe existir previamente en `Producto.id\_producto`.
 
-\- `detalle\_compra.id\_compra` debe existir previamente en `Compra.id\_compra`.
+\- `Detalle\_compra.id\_compra` debe existir previamente en `Compra.id\_compra`.
 
 \- `Venta.dni\_cliente` debe existir previamente en `Cliente.dni\_cliente`.
 
-\- `Venta\_detalle.id\_producto` debe existir previamente en `Producto.id\_producto`.
+\- `Detalle\_venta.id\_producto` debe existir previamente en `Producto.id\_producto`.
 
-\- `Venta\_detalle.id\_venta` debe existir previamente en `Venta.id\_venta`.
+\- `Detalle\_venta.id\_venta` debe existir previamente en `Venta.id\_venta`.
 
-\- `pago.id\_venta` debe existir previamente en `Venta.id\_venta`.
+\- `Pago.id\_venta` debe existir previamente en `Venta.id\_venta`.
 
-\- `pago.id\_metodo` debe existir previamente en `Metodo\_pago.id\_metodo`.
+\- `Pago.id\_metodo` debe existir previamente en `Metodo\_pago.id\_metodo`.
 

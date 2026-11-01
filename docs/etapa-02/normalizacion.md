@@ -52,9 +52,9 @@ Para representar los productos correspondientes a cada operación se utilizan la
 
 
 
-\- `detalle\_compra`
+\- `Detalle\_compra`
 
-\- `Venta\_detalle`
+\- `Detalle\_venta`
 
 
 
@@ -66,7 +66,7 @@ Esto permite registrar cada producto de forma independiente junto con su cantida
 
 
 
-La posibilidad de utilizar distintos medios de pago para una venta se resolvió mediante la tabla `pago`.
+La posibilidad de utilizar distintos medios de pago para una venta se resolvió mediante la tabla `Pago`.
 
 
 
@@ -120,6 +120,8 @@ Las siguientes tablas poseen una clave primaria formada por un único atributo:
 
 \- `Metodo\_pago` → `id\_metodo`
 
+\- `Pago` → `id\_pago`
+
 
 
 Al poseer claves simples, no pueden presentar dependencias parciales respecto de una clave primaria compuesta.
@@ -130,7 +132,7 @@ Al poseer claves simples, no pueden presentar dependencias parciales respecto de
 
 
 
-La tabla `detalle\_compra` posee una clave primaria compuesta por:
+La tabla `Detalle\_compra` posee una clave primaria compuesta por:
 
 
 
@@ -160,7 +162,7 @@ El precio unitario y la cantidad no dependen únicamente de `id\_producto` ni ú
 
 
 
-La tabla `Venta\_detalle` posee una clave primaria compuesta por:
+La tabla `Detalle\_venta` posee una clave primaria compuesta por:
 
 
 
@@ -186,15 +188,7 @@ Por lo tanto, no existen dependencias parciales.
 
 
 
-\### Tabla pago
-
-
-
-La tabla `pago` posee una clave primaria compuesta por:
-
-
-
-`(id\_venta, id\_metodo)`
+\### Tabla Pago
 
 
 
@@ -282,7 +276,7 @@ Por lo tanto, atributos como:
 
 \- `nombre\_proveedor`
 
-\- `telefono`
+\- `telefono\_proveedor`
 
 \- `cuit\_proveedor`
 
@@ -342,7 +336,7 @@ La descripción del método de pago se encuentra almacenada en `Metodo\_pago`.
 
 
 
-La tabla `pago` almacena únicamente `id\_metodo` como clave foránea, evitando repetir `nombre\_metodo` en cada operación de pago.
+La tabla `Pago` almacena únicamente `id\_metodo` como clave foránea, evitando repetir `nombre\_metodo` en cada operación de pago.
 
 
 
@@ -368,7 +362,7 @@ Mientras que los precios correspondientes a una operación específica se almace
 
 
 
-\- `detalle\_compra.precio\_unitario\_compra`
+\- `Detalle\_compra.precio\_unitario\_compra`
 
 \- `Venta\_detalle.precio\_unitario`
 
@@ -414,17 +408,17 @@ Luego del proceso de normalización, el modelo queda compuesto por las siguiente
 
 \- `Compra`
 
-\- `detalle\_compra`
+\- `Detalle\_compra`
 
 \- `Cliente`
 
 \- `Venta`
 
-\- `Venta\_detalle`
+\- `Detalle\_venta`
 
 \- `Metodo\_pago`
 
-\- `pago`
+\- `Pago`
 
 
 
