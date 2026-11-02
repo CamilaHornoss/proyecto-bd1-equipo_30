@@ -1,33 +1,20 @@
-Alcance del sistema
+# Alcance
 
-El sistema comprende las siguientes áreas y funcionalidades operativas:
+## Incluye
+- Registro de clientes y datos de contacto.
+- Catálogo de productos clasificados por categoría.
+- Control del stock actual.
+- Registro de proveedores y compras de abastecimiento.
+- Registro de ventas con detalle de productos, cantidades y precio unitario histórico.
+- Registro de uno o más pagos por venta y distintos métodos de pago.
+- Estados operativos de ventas y compras.
+- Consultas de comprobantes, ventas agregadas y análisis de clientes.
 
-Gestión de catálogo y stock
-
-- Clasificación jerárquica de artículos por categorías y marcas.
-- Monitoreo del inventario disponible.
-- Generación de alertas automáticas ante stock mínimo de reposición.
-
-Padrón de clientes
-
-- Registro centralizado de datos personales, fiscales y de contacto para facturación y coordinación de entregas.
-
-Proceso de ventas y comprobantes
-
-- Emisión y registro de ventas compuestas por renglones de detalle.
-- Congelamiento estricto del precio unitario histórico al momento de la operación.
-- Descuento automático de existencias en el inventario.
-
-Control de pagos y cobranzas
-
-- Registro de transacciones.
-- Soporte para cobros parciales o combinados a través de múltiples medios de pago habilitados:
-  - Efectivo.
-  - Transferencias.
-  - Tarjetas.
-  - Billeteras virtuales.
-
-Límites y exclusiones explícitas
+## No incluye
+- Facturación electrónica integrada con ARCA.
+- Logística de terceros.
+- Gestión contable integral.
+- Gestión de marcas, ya que no resulta necesaria para los requerimientos mínimos de este caso.
 
 El sistema no incluye:
 
