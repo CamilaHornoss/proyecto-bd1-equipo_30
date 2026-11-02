@@ -1,24 +1,8 @@
-Descripción del caso
+# Descripción del caso
 
-Nombre del equipo
+Tienda OGA es un comercio minorista polirrubro dedicado a la venta de artículos de tecnología, seguridad, iluminación, ferretería y hogar. Actualmente parte de la información se administra mediante planillas y registros manuales, lo que dificulta mantener actualizado el stock, reconstruir ventas históricas y conciliar cobranzas.
 
-Grupo 30
-
-Integrantes
-
-- Gómez, Christian Gabriel Jesús
-- Gómez, Selenia Agustina
-- González Oviedo, Bruno Fabricio
-- Hernández González, Camila
-- Hornos, Camila Paloma
-
-Título del tema
-
-Sistema de Gestión de Ventas, Control de Stock y Cobranzas para Comercio Minorista Polirrubro (Tienda OGA).
-
-Descripción del caso
-
-Tienda OGA es un emprendimiento comercial polirrubro dedicado a la venta minorista directa de artículos variados, abarcando electrónica y tecnología (tablets, cámaras de seguridad, tiras de luces LED neón, entre otros) y productos para el hogar y ferretería (griferías, secaplatos, picaportes, entre otros).
+El sistema propuesto centraliza clientes, categorías, productos, proveedores, compras, ventas y pagos. El objetivo es disponer de información consistente y trazable para la operación diaria y para consultas de gestión.
 
 El crecimiento sostenido en el volumen de consultas y pedidos a través de canales digitales y ventas en mostrador hace indispensable sustituir las planillas de cálculo manuales por un sistema de información centralizado.
 
