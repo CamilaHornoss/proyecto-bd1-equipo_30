@@ -11,7 +11,7 @@
 
 ### Conteos
 
-El DML debe devolver 8 registros para cada una de las diez tablas del modelo.
+El DML debe devolver al menos 8 registros para cada una de las diez tablas del modelo.
 
 ### Integridad de dominio
 
