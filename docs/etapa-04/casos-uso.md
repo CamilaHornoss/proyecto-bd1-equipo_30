@@ -39,7 +39,8 @@ CU-03: Consulta Avanzada de Clientes Destacados
 - Proposito: Identificar el segmento de compradores cuyo consumo acumulado supera el promedio general de la tienda para la toma de decisiones comerciales.
 - Precondiciones: Existencia de historial transaccional de ventas y clientes registrados.
 - Flujo Principal:
-  1. El sistema calcula el ticket promedio de compra por cliente de toda la base de datos.
-  2. Filtra a aquellos clientes cuya suma acumulada de compras sea estrictamente mayor a dicho promedio.
-  3. Retorna la informacion de contacto, localidad, cantidad de operaciones y monto total invertido.
+  1. El sistema combina las entidades Cliente, Venta y Detalle_venta.
+  2. Calcula el gasto acumulado por cliente y lo contrasta mediante una subconsulta con el promedio general.
+  3. Aplica la clausula `HAVING` para filtrar exclusivamente a aquellos clientes cuya suma de compras supere dicho promedio.
+  4. Retorna la informacion de contacto, localidad, cantidad de operaciones y monto total invertido.
 - Archivo SQL asociado: sql/consultas/consulta_avanzada.sql
