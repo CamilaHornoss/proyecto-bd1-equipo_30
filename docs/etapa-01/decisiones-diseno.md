@@ -2,17 +2,17 @@
 
 ## Esquema relacional propuesto
 
-El esquema relacional propuesto está compuesto por **8 tablas** y se encuentra normalizado hasta la **Tercera Forma Normal (3FN)**.
+El esquema relacional propuesto está compuesto por **10 tablas** y se encuentra normalizado hasta la **Tercera Forma Normal (3FN)**.
 
 ### CLIENTE
-
 ```text
 CLIENTE (
-    dni_cuit,
-    nombre,
-    apellido,
-    telefono,
-    direccion,
+    dni_cliente (PK),
+    nombre_cliente,
+    apellido_cliente,
+    telefono_cliente,
+    calle,
+    altura,
     localidad
 )
 ```
@@ -20,18 +20,9 @@ CLIENTE (
 ### CATEGORIA
 
 ```text
-CATEGORIA (
-    id_categoria,
+CATEGORIAS (
+    id_categoria (PK),
     nombre_categoria
-)
-```
-
-### MARCA
-
-```text
-MARCA (
-    id_marca,
-    nombre_marca
 )
 ```
 
@@ -39,13 +30,46 @@ MARCA (
 
 ```text
 PRODUCTO (
-    cod_producto,
-    descripcion,
-    precio_lista,
+    id_producto (PK),
+    descripcion_producto,
     stock_actual,
-    stock_minimo,
-    id_categoria,
-    id_marca
+    precio_lista,
+    precio_costo_referencia,
+    id_categoria (FK)
+)
+```
+
+### PROVEEDOR
+
+```text
+PROVEEDOR (
+    id_proveedor (PK),
+    cuit_proveedor,
+    nombre_proveedor,
+    telefono_proveedor
+)
+```
+
+### CROMPRA
+
+```text
+COMPRA (
+    id_compra (PK),
+    fecha_compra,
+    hora_compra,
+    estado_compra,
+    id_proveedor (FK)
+)
+```
+
+### DETALLE_COMPRA
+
+```text
+DETALLE_COMPRA (
+    id_producto (PK/FK),
+    id_compra (PK/FK),
+    precio_unitario_compra,
+    cantidad_compra
 )
 ```
 
@@ -53,10 +77,11 @@ PRODUCTO (
 
 ```text
 VENTA (
-    id_venta,
-    fecha_hora,
-    estado_pedido,
-    dni_cliente
+    id_venta (PK),
+    fecha_venta,
+    hora_venta,
+    estado_venta,
+    dni_cliente (FK)
 )
 ```
 
@@ -64,10 +89,10 @@ VENTA (
 
 ```text
 DETALLE_VENTA (
-    id_venta,
-    cod_producto,
-    cantidad,
-    precio_unitario_historico
+    id_producto (PK/FK),
+    id_venta (PK/FK),
+    precio_unitario,
+    cantidad_venta
 )
 ```
 
@@ -75,7 +100,7 @@ DETALLE_VENTA (
 
 ```text
 METODO_PAGO (
-    id_metodo,
+    id_metodo (PK),
     nombre_metodo
 )
 ```
@@ -84,12 +109,13 @@ METODO_PAGO (
 
 ```text
 PAGO_VENTA (
-    id_pago,
+    id_pago (PK),
+    id_venta (FK),
+    id_metodo (FK),
     fecha_pago,
+    hora_pago,
     monto,
-    nro_referencia,
-    id_venta,
-    id_metodo
+    referencia
 )
 ```
 
@@ -97,20 +123,18 @@ PAGO_VENTA (
 
 ### Primera Forma Normal (1FN)
 
-Cada celda almacena un único valor atómico. No existen listas de productos ni datos agrupados en columnas.
-
-Además, todas las tablas poseen una clave primaria definida.
+Cada celda almacena un único valor atómico. No existen listas de productos ni datos agrupados en columnas. Todas las tablas poseen una clave primaria definida.
 
 ### Segunda Forma Normal (2FN)
 
 No existen dependencias parciales.
 
-En `DETALLE_VENTA`, cuya clave primaria es compuesta por `id_venta` y `cod_producto`, los atributos `cantidad` y `precio_unitario_historico` dependen de la combinación completa de la venta y el producto.
+En las tablas de detalle `DETALLE_VENTA` y `DETALLE_COMPRA`, las claves primarias son compuestas y todos los atributos no clave dependen funcionalmente de la combinación completa de la operación y el producto.
 
 ### Tercera Forma Normal (3FN)
 
 No existen dependencias transitivas.
 
-El nombre de la categoría y el nombre de la marca se separaron en sus propias tablas (`CATEGORIA` y `MARCA`), evitando redundancias en la tabla `PRODUCTO`.
+El nombre de la categoría se separo en su propia tabla `CATEGORIA`, evitando redundancias en la tabla `PRODUCTO`.
 
-Del mismo modo, los métodos de pago se separaron en `METODO_PAGO`, evitando almacenar repetidamente la descripción del método en cada pago.
+Del mismo modo, los datos de proveedores se aislaron en PROVEEDOR y los métodos de pago en METODO_PAGO.
