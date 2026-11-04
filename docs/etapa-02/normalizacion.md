@@ -1,4 +1,4 @@
-\# PROCESO DE NORMALIZACIÓN
+# PROCESO DE NORMALIZACIÓN
 
 
 
@@ -6,7 +6,7 @@ El esquema fue normalizado hasta alcanzar la Tercera Forma Normal (3FN), buscand
 
 
 
-\## PRIMERA FORMA NORMAL (1FN)
+## PRIMERA FORMA NORMAL (1FN)
 
 
 
@@ -14,7 +14,7 @@ Una relación se encuentra en Primera Forma Normal (1FN) cuando todos sus atribu
 
 
 
-\### Atomicidad de los datos
+### Atomicidad de los datos
 
 
 
@@ -22,17 +22,17 @@ En la tabla `Cliente`, los datos personales y del domicilio se almacenan en atri
 
 
 
-\- `nombre\_cliente`
+- `nombre_cliente`
 
-\- `apellido\_cliente`
+- `apellido_cliente`
 
-\- `telefono\_cliente`
+- `telefono_cliente`
 
-\- `calle`
+- `calle`
 
-\- `altura`
+- `altura`
 
-\- `localidad`
+- `localidad`
 
 
 
@@ -40,7 +40,7 @@ De esta manera, no se almacena el nombre completo ni la dirección completa dent
 
 
 
-\### Eliminación de grupos repetitivos
+### Eliminación de grupos repetitivos
 
 
 
@@ -52,9 +52,9 @@ Para representar los productos correspondientes a cada operación se utilizan la
 
 
 
-\- `Detalle\_compra`
+- `Detalle_compra`
 
-\- `Detalle\_venta`
+- `Detalle_venta`
 
 
 
@@ -62,7 +62,7 @@ Esto permite registrar cada producto de forma independiente junto con su cantida
 
 
 
-\### Múltiples medios de pago
+### Múltiples medios de pago
 
 
 
@@ -74,23 +74,23 @@ De esta forma se evita incorporar atributos repetitivos dentro de `Venta`, como:
 
 
 
-\- `metodo\_1`
+- `metodo_1`
 
-\- `monto\_1`
+- `monto_1`
 
-\- `metodo\_2`
+- `metodo_2`
 
-\- `monto\_2`
-
-
-
-La relación entre una venta y sus métodos de pago queda representada mediante `id\_venta` e `id\_metodo`.
+- `monto_2`
 
 
 
+La relación entre una venta y sus métodos de pago queda representada mediante `id_venta` e `id_metodo`.
 
 
-\## SEGUNDA FORMA NORMAL (2FN)
+
+
+
+## SEGUNDA FORMA NORMAL (2FN)
 
 
 
@@ -98,7 +98,7 @@ Una relación se encuentra en Segunda Forma Normal (2FN) cuando cumple con 1FN y
 
 
 
-\### Tablas con clave primaria simple
+### Tablas con clave primaria simple
 
 
 
@@ -106,21 +106,21 @@ Las siguientes tablas poseen una clave primaria formada por un único atributo:
 
 
 
-\- `Cliente` → `dni\_cliente`
+- `Cliente` → `dni_cliente`
 
-\- `Proveedor` → `id\_proveedor`
+- `Proveedor` → `id_proveedor`
 
-\- `Categorias` → `id\_categoria`
+- `Categorias` → `id_categoria`
 
-\- `Producto` → `id\_producto`
+- `Producto` → `id_producto`
 
-\- `Compra` → `id\_compra`
+- `Compra` → `id_compra`
 
-\- `Venta` → `id\_venta`
+- `Venta` → `id_venta`
 
-\- `Metodo\_pago` → `id\_metodo`
+- `Metodo_pago` → `id_metodo`
 
-\- `Pago` → `id\_pago`
+- `Pago` → `id_pago`
 
 
 
@@ -128,15 +128,15 @@ Al poseer claves simples, no pueden presentar dependencias parciales respecto de
 
 
 
-\### Tabla detalle\_compra
+### Tabla detalle_compra
 
 
 
-La tabla `Detalle\_compra` posee una clave primaria compuesta por:
+La tabla `Detalle_compra` posee una clave primaria compuesta por:
 
 
 
-`(id\_producto, id\_compra)`
+`(id_producto, id_compra)`
 
 
 
@@ -144,9 +144,9 @@ Sus atributos:
 
 
 
-\- `precio\_unitario\_compra`
+- `precio_unitario_compra`
 
-\- `cantidad\_compra`
+- `cantidad_compra`
 
 
 
@@ -154,19 +154,19 @@ dependen de la combinación completa de producto y compra.
 
 
 
-El precio unitario y la cantidad no dependen únicamente de `id\_producto` ni únicamente de `id\_compra`, sino del producto específico dentro de una determinada operación de compra.
+El precio unitario y la cantidad no dependen únicamente de `id_producto` ni únicamente de `id_compra`, sino del producto específico dentro de una determinada operación de compra.
 
 
 
-\### Tabla Venta\_detalle
+### Tabla Detalle_venta
 
 
 
-La tabla `Detalle\_venta` posee una clave primaria compuesta por:
+La tabla `Detalle_venta` posee una clave primaria compuesta por:
 
 
 
-`(id\_producto, id\_venta)`
+`(id_producto, id_venta)`
 
 
 
@@ -174,9 +174,9 @@ Los atributos:
 
 
 
-\- `precio\_unitario`
+- `precio_unitario`
 
-\- `cantidad`
+- `cantidad_venta`
 
 
 
@@ -188,21 +188,21 @@ Por lo tanto, no existen dependencias parciales.
 
 
 
-\### Tabla Pago
+### Tabla Pago
 
 
 
-El atributo `monto` depende de la combinación entre la venta y el método de pago utilizado.
+Los atributos de `Pago` dependen de su clave primaria simple `id_pago`.
 
 
 
-De esta manera, el monto representa cuánto fue abonado mediante un determinado método dentro de una venta específica.
+`id_venta` e `id_metodo` permiten relacionar cada pago con la venta correspondiente y con el método de pago utilizado.
 
 
 
 
 
-\## TERCERA FORMA NORMAL (3FN)
+## TERCERA FORMA NORMAL (3FN)
 
 
 
@@ -210,7 +210,7 @@ Una relación se encuentra en Tercera Forma Normal (3FN) cuando cumple con 2FN y
 
 
 
-\### Separación de las categorías de productos
+### Separación de las categorías de productos
 
 
 
@@ -222,7 +222,7 @@ La información correspondiente a las categorías se encuentra separada en la ta
 
 
 
-`id\_categoria`
+`id_categoria`
 
 
 
@@ -230,7 +230,7 @@ como clave foránea.
 
 
 
-El atributo `nombre\_categoria` se encuentra en `Categorias` y depende de `id\_categoria`.
+El atributo `nombre_categoria` se encuentra en `Categorias` y depende de `id_categoria`.
 
 
 
@@ -242,7 +242,7 @@ La dependencia queda representada como:
 
 
 
-`id\_producto → id\_categoria`
+`id_producto → id_categoria`
 
 
 
@@ -250,7 +250,7 @@ y:
 
 
 
-`id\_categoria → nombre\_categoria`
+`id_categoria → nombre_categoria`
 
 
 
@@ -258,7 +258,7 @@ manteniendo la información propia de la categoría fuera de la tabla `Producto`
 
 
 
-\### Separación de proveedores y compras
+### Separación de proveedores y compras
 
 
 
@@ -266,7 +266,7 @@ Los datos propios del proveedor se almacenan únicamente en la tabla `Proveedor`
 
 
 
-La tabla `Compra` contiene solamente `id\_proveedor` como clave foránea para identificar al proveedor asociado a cada compra.
+La tabla `Compra` contiene solamente `id_proveedor` como clave foránea para identificar al proveedor asociado a cada compra.
 
 
 
@@ -274,11 +274,11 @@ Por lo tanto, atributos como:
 
 
 
-\- `nombre\_proveedor`
+- `nombre_proveedor`
 
-\- `telefono\_proveedor`
+- `telefono_proveedor`
 
-\- `cuit\_proveedor`
+- `cuit_proveedor`
 
 
 
@@ -290,7 +290,7 @@ Esto evita anomalías de actualización si cambia algún dato del proveedor.
 
 
 
-\### Separación de clientes y ventas
+### Separación de clientes y ventas
 
 
 
@@ -298,7 +298,7 @@ Los datos personales del cliente se almacenan exclusivamente en la tabla `Client
 
 
 
-La tabla `Venta` contiene `dni\_cliente` como clave foránea.
+La tabla `Venta` contiene `dni_cliente` como clave foránea.
 
 
 
@@ -306,17 +306,17 @@ Por lo tanto, atributos como:
 
 
 
-\- `nombre\_cliente`
+- `nombre_cliente`
 
-\- `apellido\_cliente`
+- `apellido_cliente`
 
-\- `telefono\_cliente`
+- `telefono_cliente`
 
-\- `calle`
+- `calle`
 
-\- `altura`
+- `altura`
 
-\- `localidad`
+- `localidad`
 
 
 
@@ -324,23 +324,23 @@ no se duplican en cada venta.
 
 
 
-Esto permite que los datos propios del cliente dependan únicamente de `dni\_cliente`.
+Esto permite que los datos propios del cliente dependan únicamente de `dni_cliente`.
 
 
 
-\### Separación de métodos de pago
+### Separación de métodos de pago
 
 
 
-La descripción del método de pago se encuentra almacenada en `Metodo\_pago`.
+La descripción del método de pago se encuentra almacenada en `Metodo_pago`.
 
 
 
-La tabla `Pago` almacena únicamente `id\_metodo` como clave foránea, evitando repetir `nombre\_metodo` en cada operación de pago.
+La tabla `Pago` almacena únicamente `id_metodo` como clave foránea, evitando repetir `nombre_metodo` en cada operación de pago.
 
 
 
-\### Precios de las operaciones
+### Precios de las operaciones
 
 
 
@@ -352,9 +352,9 @@ En `Producto` se encuentran:
 
 
 
-\- `precio\_lista`
+- `precio_lista`
 
-\- `precio\_compra`
+- `precio_costo_referencia`
 
 
 
@@ -362,9 +362,9 @@ Mientras que los precios correspondientes a una operación específica se almace
 
 
 
-\- `Detalle\_compra.precio\_unitario\_compra`
+- `Detalle_compra.precio_unitario_compra`
 
-\- `Venta\_detalle.precio\_unitario`
+- `Detalle_venta.precio_unitario`
 
 
 
@@ -376,7 +376,7 @@ Por ejemplo:
 
 
 
-`(id\_compra, id\_producto) → precio\_unitario\_compra`
+`(id_compra, id_producto) → precio_unitario_compra`
 
 
 
@@ -384,7 +384,7 @@ y:
 
 
 
-`(id\_venta, id\_producto) → precio\_unitario`
+`(id_venta, id_producto) → precio_unitario`
 
 
 
@@ -392,7 +392,7 @@ De esta forma, el precio aplicado en una operación depende de la clave de la re
 
 
 
-\## RESULTADO DE LA NORMALIZACIÓN
+## RESULTADO DE LA NORMALIZACIÓN
 
 
 
@@ -400,27 +400,26 @@ Luego del proceso de normalización, el modelo queda compuesto por las siguiente
 
 
 
-\- `Categorias`
+- `Categorias`
 
-\- `Producto`
+- `Producto`
 
-\- `Proveedor`
+- `Proveedor`
 
-\- `Compra`
+- `Compra`
 
-\- `Detalle\_compra`
+- `Detalle_compra`
 
-\- `Cliente`
+- `Cliente`
 
-\- `Venta`
+- `Venta`
 
-\- `Detalle\_venta`
+- `Detalle_venta`
 
-\- `Metodo\_pago`
+- `Metodo_pago`
 
-\- `Pago`
+- `Pago`
 
 
 
 El esquema resultante cumple con los criterios analizados de 1FN, 2FN y 3FN, separando los datos según sus dependencias funcionales y utilizando claves primarias y foráneas para mantener las relaciones entre las tablas.
-
