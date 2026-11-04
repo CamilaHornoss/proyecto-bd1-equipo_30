@@ -1,24 +1,19 @@
 # Alcance
 
 ## Incluye
-- Registro de clientes y datos de contacto.
-- Catálogo de productos clasificados por categoría.
-- Control del stock actual.
-- Registro de proveedores y compras de abastecimiento.
-- Registro de ventas con detalle de productos, cantidades y precio unitario histórico.
-- Registro de uno o más pagos por venta y distintos métodos de pago.
+- Registro de clientes y datos de contacto (`dni_cliente`).
+- Catálogo de productos clasificados por categoría (excluyendo gestión de marcas por no ser necesaria).
+- Control del stock actual de inventario.
+- Registro de proveedores y compras de abastecimiento (`COMPRA` y `DETALLE_COMPRA`).
+- Registro de ventas con detalle de productos, cantidades y precio unitario histórico (`VENTA` y `DETALLE_VENTA`).
+- Registro de uno o más pagos por venta asociados a distintos métodos de pago (`PAGO` y `METODO_PAGO`).
 - Estados operativos de ventas y compras.
-- Consultas de comprobantes, ventas agregadas y análisis de clientes.
+- Consultas de comprobantes, informes de ventas y análisis avanzado de clientes.
 
 ## No incluye
-- Facturación electrónica integrada con ARCA.
-- Logística de terceros.
+- Facturación electrónica integrada con ARCA / AFIP.
+- Logística de terceros y seguimiento por API de envíos.
 - Gestión contable integral.
 - Gestión de marcas, ya que no resulta necesaria para los requerimientos mínimos de este caso.
 
-El sistema no incluye:
-
-- Facturación electrónica automatizada mediante webhooks o servicios web de AFIP/ARCA.
-- Integración por API con plataformas logísticas de encomiendas de terceros.
-
-Estos procesos continuarán gestionándose de manera administrativa interna.
+Estos procesos secundarios continuarán gestionándose de manera administrativa interna.
