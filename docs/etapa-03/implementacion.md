@@ -24,7 +24,7 @@ La implementación respeta los elementos visibles en el DER y en el modelo relac
 - `Producto` incluye `precio_costo_referencia`.
 - `Detalle_compra` conserva el precio histórico en `precio_unitario_compra`.
 - `Detalle_venta` conserva el precio histórico en `precio_unitario`.
-- `Pago` posee `id_pago` como clave primaria simple y referencia a `Venta` y `Metodo_pago`.
+- `Pago` posee `id_pago` como clave primaria simple (autoincremental), permitiendo relacionar de forma limpia cada cobro con una `Venta` y un `Metodo_pago`.
 - `Pago` incluye `fecha_pago`, `hora_pago`, `monto` y `referencia`.
 - `Cliente` utiliza `nombre_cliente`, `apellido_cliente` y `telefono_cliente`.
 - Las tablas de detalle utilizan claves primarias compuestas.
@@ -52,7 +52,7 @@ Los datos permiten verificar:
 
 - compras y ventas válidas;
 - precios históricos en los detalles;
-- una venta abonada mediante dos métodos distintos;
+- una venta abonada mediante dos métodos distintos (registrando múltiples filas en `Pago` mediante su clave simple `id_pago`);
 - una venta pendiente sin pagos;
 - correspondencia entre importes vendidos y pagos registrados.
 
