@@ -20,6 +20,7 @@ Establece que cada registro o fila debe ser identificable de forma unívoca dent
 * **`Producto` (`id_producto`):** Clave primaria autoincremental.
 * **`Venta` (`id_venta`):** Identificador único autoincremental de la cabecera de venta.
 * **`Compra` (`id_compra`):** Identificador único autoincremental de la orden de compra.
+* **`Pago` (`id_pago`):** Identificador único autoincremental del comprobante de cobro.
 
 ---
 
@@ -27,17 +28,17 @@ Establece que cada registro o fila debe ser identificable de forma unívoca dent
 Asegura que los valores asignados a una columna pertenezcan a un conjunto de valores admisibles según su tipo de dato, formato, obligatoriedad o rango lógico.
 
 * **Restricción `NOT NULL`:** Obliga la carga de datos indispensables para el negocio en tablas como:
-  * `Cliente` (`nombre`, `apellido`, `calle`, `altura`, `localidad`)
+  * `Cliente` (`nombre_cliente`, `apellido_cliente`, `calle`, `altura`, `localidad`)
   * `Venta` (`fecha_venta`, `hora_venta`, `estado_venta`)
   * `Compra` (`fecha_compra`, `hora_compra`, `estado_compra`)
 
 * **Restricción `CHECK`:** Valida reglas aritméticas y condiciones lógicas sobre montos y cantidades:
   * `Detalle_venta`: `precio_unitario > 0` y `cantidad_venta > 0`.
-  * `Detalle_compra`: `precio_compra > 0` y `cantidad_compra > 0`.
+  * `Detalle_compra`: `precio_unitario_compra > 0` y `cantidad_compra > 0`.
   * `Pago`: `monto > 0`.
 
 * **Restricción `UNIQUE` (Claves Alternativas):** Evita la duplicación de atributos identificatorios secundarios que no forman parte de la clave primaria:
-  * `Cliente` (`telefono`): Impide que dos clientes compartan la misma línea de contacto.
+  * `Cliente` (`telefono_cliente`): Impide que dos clientes compartan la misma línea de contacto.
   * `Proveedor` (`cuit_proveedor`): Garantiza la unicidad tributaria por cada proveedor registrado.
   * `Producto` (`descripcion_producto`): Asegura que no se creen dos productos con la misma descripción.
 
@@ -48,10 +49,10 @@ Garantiza la coherencia lógica y las relaciones válidas entre tablas vinculada
 
 **Implementación en el proyecto:**
 * `fk_Venta_dni_cliente`: La tabla `Venta` exige que `dni_cliente` exista previamente en la tabla `Cliente`.
-* `fk_Compra_cuit_proveedor`: La tabla `Compra` exige que `id_proveedor` exista previamente en la tabla `Proveedor`.
+* `fk_Compra_id_proveedor`: La tabla `Compra` exige que `id_proveedor` exista previamente en la tabla `Proveedor`.
 * `fk_Producto_id_categoria`: La tabla `Producto` exige que `id_categoria` exista previamente en la tabla `Categorias`.
 * `fk_Detalle_venta_id_producto`: Asocia cada renglón vendido a un producto existente.
-* `fk_Detalle_venta_id_compra`: Asocia cada renglón vendido a una cabecera de venta existente.
+* `fk_Detalle_venta_id_venta`: Asocia cada renglón vendido a una cabecera de venta existente.
 * `fk_Detalle_Compra_id_producto`: Asocia cada renglón comprado a un producto existente.
 * `fk_Detalle_Compra_id_compra`: Asocia cada renglón comprado a una cabecera de compra existente.
 * `fk_Pago_id_venta`: Asocia el comprobante de cobro a una venta válida.
@@ -64,7 +65,6 @@ Garantiza la consistencia en tablas intermedias que resuelven relaciones de much
 
 * **`Detalle_venta`:** Clave primaria compuesta por `(id_producto, id_venta)`. Evita registrar dos veces el mismo producto en una misma venta.
 * **`Detalle_compra`:** Clave primaria compuesta por `(id_producto, id_compra)`. Evita registrar dos veces el mismo producto dentro de una misma orden de compra.
-* **`Pago`:** Clave primaria compuesta por `(id_venta, id_metodo)`. Identifica el pago vinculado a la venta y al método financiero utilizado.
 
 ---
 
@@ -72,8 +72,8 @@ Garantiza la consistencia en tablas intermedias que resuelven relaciones de much
 
 ### Tabla: `Cliente`
 * `dni_cliente`: `PRIMARY KEY`, `NOT NULL`
-* `telefono`: `UNIQUE`, `NOT NULL`
-* `nombre`, `apellido`, `calle`, `altura`, `localidad`: `NOT NULL`
+* `telefono_cliente`: `UNIQUE`, `NOT NULL`
+* `nombre_cliente`, `apellido_cliente`, `calle`, `altura`, `localidad`: `NOT NULL`
 
 ### Tabla: `Metodo_pago`
 * `id_metodo`: `PRIMARY KEY`, `IDENTITY(1,1)`
@@ -97,29 +97,30 @@ Garantiza la consistencia en tablas intermedias que resuelven relaciones de much
 ### Tabla: `Venta`
 * `id_venta`: `PRIMARY KEY`, `IDENTITY(1,1)`
 * `fecha_venta`, `hora_venta`, `estado_venta`: `NOT NULL`
-* `dni_cliente`: `FOREIGN KEY` (`fk_Venta_dni_cliente`) referenciando a `Cliente(dni_cliente)`
+* `dni_cliente`: `FOREIGN KEY` referenciando a `Cliente(dni_cliente)`
 
 ### Tabla: `Compra`
 * `id_compra`: `PRIMARY KEY`, `IDENTITY(1,1)`
 * `fecha_compra`, `hora_compra`, `estado_compra`: `NOT NULL`
-* `id_proveedor`: `FOREIGN KEY` (`fk_Compra_cuit_proveedor`) referenciando a `Proveedor(id_proveedor)`
+* `id_proveedor`: `FOREIGN KEY` referenciando a `Proveedor(id_proveedor)`
 
 ### Tabla: `Detalle_compra`
-* `(id_producto, id_compra)`: `PRIMARY KEY` (`pk_Detalle_compra`)
+* `(id_producto, id_compra)`: `PRIMARY KEY`
 * `id_producto`: `FOREIGN KEY` referenciando a `Producto(id_producto)`
 * `id_compra`: `FOREIGN KEY` referenciando a `Compra(id_compra)`
-* `precio_compra`: `CHECK (precio_compra > 0)`, `NOT NULL`
+* `precio_unitario_compra`: `CHECK (precio_unitario_compra > 0)`, `NOT NULL`
 * `cantidad_compra`: `CHECK (cantidad_compra > 0)`, `NOT NULL`
 
 ### Tabla: `Detalle_venta`
-* `(id_producto, id_venta)`: `PRIMARY KEY` (`pk_Detalle_venta`)
+* `(id_producto, id_venta)`: `PRIMARY KEY`
 * `id_producto`: `FOREIGN KEY` referenciando a `Producto(id_producto)`
 * `id_venta`: `FOREIGN KEY` referenciando a `Venta(id_venta)`
 * `precio_unitario`: `CHECK (precio_unitario > 0)`, `NOT NULL`
 * `cantidad_venta`: `CHECK (cantidad_venta > 0)`, `NOT NULL`
 
 ### Tabla: `Pago`
-* `(id_venta, id_metodo)`: `PRIMARY KEY` (`pk_Pago`)
+* `id_pago`: `PRIMARY KEY`, `IDENTITY(1,1)`
 * `id_venta`: `FOREIGN KEY` referenciando a `Venta(id_venta)`
 * `id_metodo`: `FOREIGN KEY` referenciando a `Metodo_pago(id_metodo)`
 * `monto`: `CHECK (monto > 0)`, `NOT NULL`
+* `fecha_pago`, `hora_pago`: `NOT NULL`
