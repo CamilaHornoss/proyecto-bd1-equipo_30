@@ -2,29 +2,30 @@
 
 ## RN.01 - Identificación y registro de clientes
 
-Toda venta debe estar asociada obligatoriamente a un cliente registrado mediante su número de DNI o CUIT.
+Toda venta debe estar asociada obligatoriamente a un cliente registrado mediante su número de documento (`dni_cliente`).
 
 De cada cliente se almacena:
 
+- DNI (Clave primaria).
 - Nombre.
-- Apellido o razón social.
-- Número de teléfono de contacto.
-- Dirección: calle, número y localidad.
+- Apellido.
+- Número de teléfono de contacto (`telefono_cliente`).
+- Dirección: calle, altura y localidad.
 
-El número de DNI/CUIT es único en el sistema.
+El número de DNI es único en el sistema.
 
 ## RN.02 - Organización del catálogo
 
-Todo producto comercializado se identifica mediante un código alfanumérico único (`cod_producto`).
+Todo producto comercializado se identifica mediante un código numérico autoincremental (`id_producto`).
 
-Cada producto pertenece de manera obligatoria a una Categoría y a una Marca, evitando redundancias en la descripción.
+Cada producto pertenece de manera obligatoria a una Categoría, evitando redundancias en la descripción. No se gestionan marcas.
 
 De cada producto se registra:
 
 - Descripción.
 - Precio de lista vigente.
-- Stock actual.
-- Stock mínimo de reposición.
+- Precio de costo de referencia.
+- Stock actual disponible.
 
 ## RN.03 - Control y descuento automático de stock
 
@@ -32,49 +33,30 @@ Una venta no puede confirmarse si la cantidad solicitada de un artículo supera 
 
 Al registrarse la venta, el sistema descuenta automáticamente las unidades vendidas del stock actual del producto.
 
-Si el stock remanente resulta menor o igual al stock mínimo, el sistema marcará el producto en estado de alerta para reposición.
+## RN.04 - Historial de precios unitarios en el detalle de venta y compra
 
-## RN.04 - Historial de precios unitarios en el detalle de venta
+Cada venta se compone de un encabezado general y uno o varios renglones en `DETALLE_VENTA`. 
+Del mismo modo, cada compra a proveedores cuenta con un encabezado en `COMPRA` y renglones en `DETALLE_COMPRA`.
 
-Cada venta se compone de un encabezado general y uno o varios renglones en `DETALLE_VENTA`.
+En cada renglón de venta se debe registrar obligatoriamente el precio unitario histórico al momento exacto de la operación junto con la cantidad adquirida. En los renglones de compra se registra el `precio_unitario_compra`.
 
-En cada renglón se debe registrar obligatoriamente el precio unitario histórico de venta al momento exacto de la operación junto con la cantidad adquirida.
-
-Las actualizaciones posteriores en el precio de lista de la tabla de productos no alterarán bajo ninguna circunstancia los montos facturados en operaciones ya asentadas.
+Las actualizaciones posteriores en los precios no alterarán bajo ninguna circunstancia los montos de operaciones ya asentadas.
 
 ## RN.05 - Cobranzas y múltiples medios de pago
 
-Una venta puede cancelarse mediante uno o varios pagos utilizando los métodos habilitados por el comercio:
-
-- Efectivo.
-- Transferencia bancaria.
-- Tarjeta de débito.
-- Tarjeta de crédito.
-- Mercado Pago.
+Una venta puede cancelarse mediante uno o varios pagos utilizando los métodos habilitados por el comercio (Efectivo, Transferencia / QR, Tarjeta de Crédito, etc.).
 
 De cada pago se registra:
 
 - Fecha y hora.
 - Método utilizado.
 - Monto abonado.
-- Número de comprobante o referencia.
+- Número de referencia o comprobante.
 
-La suma total de los pagos asignados a una venta debe coincidir exactamente con el importe final liquidado.
+## RN.06 - Unicidad de ítems por venta o compra
 
-## RN.06 - Unicidad de ítems por venta
+Una venta o compra no puede contener renglones duplicados para un mismo producto (validado por su clave primaria compuesta en las tablas de detalle).
 
-Una venta no puede contener renglones duplicados para un mismo producto.
+## RN.07 - Ciclo de operaciones y gestión de proveedores
 
-Si el cliente solicita unidades adicionales de un artículo ya cargado, el sistema actualizará el campo de cantidad en el renglón correspondiente del detalle.
-
-## RN.07 - Estado y ciclo del pedido
-
-Cada venta cuenta con un estado operativo que refleja el ciclo de vida del pedido:
-
-- Pendiente de pago.
-- Pagado.
-- Preparado.
-- Entregado.
-- Cancelado.
-
-Esto permite supervisar los despachos y entregas de mercadería.
+El sistema contempla la relación con proveedores (`PROVEEDOR`), permitiendo registrar órdenes de abastecimiento (`COMPRA`) vinculadas a un proveedor específico, manteniendo el control de la trazabilidad comercial de entrada y salida de mercadería.
