@@ -1,4 +1,4 @@
-\# JUSTIFICACIÓN Y DECISIONES DE DISEÑO
+# JUSTIFICACIÓN Y DECISIONES DE DISEÑO
 
 
 
@@ -6,25 +6,25 @@ El diseño del modelo relacional responde a las necesidades de un sistema comerc
 
 
 
-\## DESACOPLAMIENTO DE PRECIOS: PRECIO DE LISTA VS. PRECIO TRANSACCIONAL
+## DESACOPLAMIENTO DE PRECIOS: PRECIO DE LISTA VS. PRECIO TRANSACCIONAL
 
 
 
-\*\*Problema:\*\*  
+**Problema:**  
 
-Si solamente se almacenara `precio\_lista` en la tabla `Producto`, una modificación posterior del precio podría impedir conocer con precisión qué valor fue aplicado en una venta anterior.
+Si solamente se almacenara `precio_lista` en la tabla `Producto`, una modificación posterior del precio podría impedir conocer con precisión qué valor fue aplicado en una venta anterior.
 
 
 
-\*\*Decisión:\*\*  
+**Decisión:**  
 
 La tabla `Producto` conserva los valores generales del producto mediante:
 
 
 
-\- `precio\_lista`
+- `precio_lista`
 
-\- `precio\_compra`
+- `precio_costo_referencia`
 
 
 
@@ -32,9 +32,9 @@ Mientras que las tablas de detalle almacenan los precios efectivamente aplicados
 
 
 
-\- `Venta\_detalle.precio\_unitario`
+- `Detalle_venta.precio_unitario`
 
-\- `detalle\_compra.precio\_unitario\_compra`
+- `detalle_compra.precio_unitario_compra`
 
 
 
@@ -46,31 +46,35 @@ Esto permite conservar la trazabilidad histórica de las operaciones.
 
 
 
-\## PAGOS MIXTOS O MÚLTIPLES POR VENTA
+## PAGOS MIXTOS O MÚLTIPLES POR VENTA
 
 
 
-\*\*Problema:\*\*  
+**Problema:**  
 
 Una venta puede ser abonada utilizando distintos métodos de pago. Por ejemplo, una parte puede abonarse en efectivo y otra mediante transferencia.
 
 
 
-\*\*Decisión:\*\*  
+**Decisión:**  
 
-Se creó la relación `pago`, que vincula `Venta` con `Metodo\_pago` mediante una clave primaria compuesta por:
-
-
-
-`(id\_venta, id\_metodo)`
+Se creó la relación `pago`, que vincula `Venta` con `Metodo_pago` mediante las claves foráneas `id_venta` e `id_metodo`.
 
 
 
-Además, la tabla posee el atributo:
+Cada pago se identifica de forma única mediante:
 
 
 
-`monto`
+`id_pago`
+
+
+
+Además, la tabla posee los atributos:
+
+
+
+`fecha_pago`, `hora_pago`, `monto` y `referencia`
 
 
 
@@ -82,11 +86,11 @@ La estructura permite representar tanto ventas abonadas mediante un único méto
 
 
 
-\## RELACIÓN ENTRE COMPRAS Y PROVEEDORES
+## RELACIÓN ENTRE COMPRAS Y PROVEEDORES
 
 
 
-\*\*Decisión:\*\*  
+**Decisión:**  
 
 La relación entre `Proveedor` y `Compra` es de uno a muchos (1:N).
 
@@ -96,7 +100,7 @@ La tabla `Proveedor` utiliza:
 
 
 
-`id\_proveedor`
+`id_proveedor`
 
 
 
@@ -108,7 +112,7 @@ La tabla `Compra` contiene:
 
 
 
-`id\_proveedor`
+`id_proveedor`
 
 
 
@@ -116,17 +120,17 @@ como clave foránea que referencia a:
 
 
 
-`Proveedor(id\_proveedor)`.
+`Proveedor(id_proveedor)`.
 
 
 
-\*\*Justificación:\*\*  
+**Justificación:**  
 
 Cada compra se encuentra asociada a un único proveedor, mientras que un mismo proveedor puede estar relacionado con múltiples compras realizadas a lo largo del tiempo.
 
 
 
-El atributo `cuit\_proveedor` se mantiene como un dato propio del proveedor, pero no se utiliza como clave primaria del modelo. La identificación interna de cada proveedor se realiza mediante `id\_proveedor`.
+El atributo `cuit_proveedor` se mantiene como un dato propio del proveedor, pero no se utiliza como clave primaria del modelo. La identificación interna de cada proveedor se realiza mediante `id_proveedor`.
 
 
 
@@ -134,25 +138,25 @@ Esta decisión permite separar la identificación interna utilizada por el siste
 
 
 
-\## NORMALIZACIÓN DEL DOMICILIO DEL CLIENTE
+## NORMALIZACIÓN DEL DOMICILIO DEL CLIENTE
 
 
 
-\*\*Decisión:\*\*  
+**Decisión:**  
 
 Se optó por almacenar los componentes principales del domicilio del cliente en atributos separados dentro de la tabla `Cliente`:
 
 
 
-\- `calle`
+- `calle`
 
-\- `altura`
+- `altura`
 
-\- `localidad`
+- `localidad`
 
 
 
-\*\*Justificación:\*\*  
+**Justificación:**  
 
 Esta separación permite mantener los datos de dirección de forma atómica y facilita la realización de búsquedas, filtros y consultas por localidad o calle.
 
@@ -166,11 +170,11 @@ De esta manera, se mantiene un equilibrio entre normalización y simplicidad del
 
 
 
-\## SEPARACIÓN DE DATOS DEL CLIENTE Y LAS VENTAS
+## SEPARACIÓN DE DATOS DEL CLIENTE Y LAS VENTAS
 
 
 
-\*\*Decisión:\*\*  
+**Decisión:**  
 
 Los datos personales y de contacto se almacenan únicamente en la tabla `Cliente`.
 
@@ -180,7 +184,7 @@ La tabla `Venta` contiene solamente:
 
 
 
-`dni\_cliente`
+`dni_cliente`
 
 
 
@@ -188,23 +192,23 @@ como clave foránea.
 
 
 
-\*\*Justificación:\*\*  
+**Justificación:**  
 
 Esto evita repetir en cada venta información como:
 
 
 
-\- `nombre\_cliente`
+- `nombre_cliente`
 
-\- `apellido\_cliente`
+- `apellido_cliente`
 
-\- `telefono\_cliente`
+- `telefono_cliente`
 
-\- `calle`
+- `calle`
 
-\- `altura`
+- `altura`
 
-\- `localidad`
+- `localidad`
 
 
 
@@ -212,27 +216,27 @@ De esta forma, una modificación en los datos del cliente se realiza en un únic
 
 
 
-\## SEPARACIÓN DE CATEGORÍAS Y PRODUCTOS
+## SEPARACIÓN DE CATEGORÍAS Y PRODUCTOS
 
 
 
-\*\*Decisión:\*\*  
+**Decisión:**  
 
 Las categorías se almacenan en una entidad independiente denominada `Categorias`, compuesta por:
 
 
 
-\- `id\_categoria`
+- `id_categoria`
 
-\- `nombre\_categoria`
-
-
-
-La tabla `Producto` incorpora `id\_categoria` como clave foránea.
+- `nombre_categoria`
 
 
 
-\*\*Justificación:\*\*  
+La tabla `Producto` incorpora `id_categoria` como clave foránea.
+
+
+
+**Justificación:**  
 
 Esto evita repetir el nombre de una misma categoría para cada producto.
 
@@ -242,19 +246,19 @@ Además, permite que varios productos pertenezcan a una misma categoría manteni
 
 
 
-\## USO DE TABLAS DE DETALLE EN COMPRAS Y VENTAS
+## USO DE TABLAS DE DETALLE EN COMPRAS Y VENTAS
 
 
 
-\*\*Decisión:\*\*  
+**Decisión:**  
 
 Se utilizaron las tablas:
 
 
 
-\- `detalle\_compra`
+- `detalle_compra`
 
-\- `Venta\_detalle`
+- `Detalle_venta`
 
 
 
@@ -262,7 +266,7 @@ para resolver la relación entre las operaciones y los productos.
 
 
 
-\*\*Justificación:\*\*  
+**Justificación:**  
 
 Una compra puede contener varios productos y un producto puede aparecer en diferentes compras. Del mismo modo, una venta puede incluir varios productos y un producto puede participar en múltiples ventas.
 
@@ -276,23 +280,23 @@ Además, estas tablas permiten almacenar atributos propios de cada operación, c
 
 
 
-En `detalle\_compra`:
+En `detalle_compra`:
 
 
 
-\- `precio\_unitario\_compra`
+- `precio_unitario_compra`
 
-\- `cantidad\_compra`
-
-
-
-En `Venta\_detalle`:
+- `cantidad_compra`
 
 
 
-\- `precio\_unitario`
+En `Detalle_venta`:
 
-\- `cantidad`
+
+
+- `precio_unitario`
+
+- `cantidad_venta`
 
 
 
@@ -300,11 +304,11 @@ Estos valores dependen de la combinación específica entre la operación y el p
 
 
 
-\## MANEJO DE FECHAS Y HORAS SEPARADAS
+## MANEJO DE FECHAS Y HORAS SEPARADAS
 
 
 
-\*\*Decisión:\*\*  
+**Decisión:**  
 
 Las tablas transaccionales `Venta` y `Compra` almacenan la fecha y la hora en atributos independientes:
 
@@ -314,9 +318,9 @@ En `Venta`:
 
 
 
-\- `fecha\_venta`
+- `fecha_venta`
 
-\- `hora\_venta`
+- `hora_venta`
 
 
 
@@ -324,13 +328,13 @@ En `Compra`:
 
 
 
-\- `fecha\_compra`
+- `fecha_compra`
 
-\- `hora\_compra`
+- `hora_compra`
 
 
 
-\*\*Justificación:\*\*  
+**Justificación:**  
 
 La separación permite realizar consultas directamente sobre la fecha o sobre la hora según las necesidades del sistema.
 
@@ -340,31 +344,30 @@ Por ejemplo, se pueden obtener ventas realizadas en un día determinado, agrupar
 
 
 
-\## SEPARACIÓN DE LOS MÉTODOS DE PAGO
+## SEPARACIÓN DE LOS MÉTODOS DE PAGO
 
 
 
-\*\*Decisión:\*\*  
+**Decisión:**  
 
-Los métodos disponibles se almacenan en la tabla `Metodo\_pago`, utilizando:
-
-
-
-\- `id\_metodo`
-
-\- `nombre\_metodo`
+Los métodos disponibles se almacenan en la tabla `Metodo_pago`, utilizando:
 
 
 
-La tabla `pago` referencia el método mediante `id\_metodo`.
+- `id_metodo`
+
+- `nombre_metodo`
 
 
 
-\*\*Justificación:\*\*  
+La tabla `pago` referencia el método mediante `id_metodo`.
+
+
+
+**Justificación:**  
 
 Esto evita repetir nombres como "Efectivo", "Transferencia" o "Tarjeta" en cada operación.
 
 
 
 Además, permite incorporar nuevos métodos de pago sin modificar la estructura de la tabla `Venta`.
-
