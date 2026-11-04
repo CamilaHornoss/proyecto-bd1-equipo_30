@@ -280,3 +280,197 @@ FK `id_metodo` referencia a `Metodo_pago(id_metodo)`.
 
 
 **estado_compra:** Estado actual de la orden de compra.  
+
+
+
+**id_proveedor (FK):** Identificador del proveedor al cual se realizó la compra. Referencia a `Proveedor(id_proveedor)`.
+
+
+
+
+
+## TABLA: Detalle_compra
+
+
+
+**id_producto (PK, FK):** Producto incluido en la orden de compra. Referencia a `Producto(id_producto)`.  
+
+
+
+**id_compra (PK, FK):** Compra a la que pertenece el detalle. Referencia a `Compra(id_compra)`.  
+
+
+
+**precio_unitario_compra:** Precio unitario pagado por el producto en esa compra específica.  
+
+
+
+**cantidad_compra:** Cantidad de unidades adquiridas del producto.
+
+
+
+La clave primaria de `detalle_compra` está compuesta por `id_producto` e `id_compra`.
+
+
+
+
+
+## TABLA: Cliente
+
+
+
+**dni_cliente (PK):** Documento Nacional de Identidad que identifica de forma única al cliente.  
+
+
+
+**nombre_cliente:** Nombres del cliente.  
+
+
+
+**apellido_cliente:** Apellidos del cliente.  
+
+
+
+**telefono_cliente (UQ):** Número de teléfono de contacto del cliente.  
+
+
+
+**calle:** Nombre de la calle correspondiente al domicilio del cliente.  
+
+
+
+**altura:** Numeración correspondiente al domicilio del cliente.  
+
+
+
+**localidad:** Localidad o ciudad de residencia del cliente.
+
+
+
+
+
+## TABLA: Venta
+
+
+
+**id_venta (PK):** Identificador único de la operación de venta.  
+
+
+
+**fecha_venta:** Fecha en la que se realizó la venta.  
+
+
+
+**hora_venta:** Hora en la que se registró la venta.  
+
+
+
+**estado_venta:** Estado actual del pedido asociado a la venta.  
+
+
+
+**dni_cliente (FK):** Cliente que realizó la compra. Referencia a `Cliente(dni_cliente)`.
+
+
+
+
+
+## TABLA: Detalle_venta
+
+
+
+**id_producto (PK, FK):** Producto incluido en la venta. Referencia a `Producto(id_producto)`.  
+
+
+
+**id_venta (PK, FK):** Venta a la que pertenece el detalle. Referencia a `Venta(id_venta)`.  
+
+
+
+**precio_unitario:** Precio unitario aplicado al producto en el momento de la venta.  
+
+
+
+**cantidad_venta:** Cantidad de unidades vendidas.
+
+
+
+La clave primaria de `Detalle_venta` está compuesta por `id_producto` e `id_venta`.
+
+
+
+
+
+## TABLA: Metodo_pago
+
+
+
+**id_metodo (PK):** Identificador único del método de pago.  
+
+
+
+**nombre_metodo (UQ):** Denominación del medio (ej. Efectivo, Transferencia, Tarjeta de Débito).
+
+
+
+
+
+## TABLA: Pago
+
+
+
+**id_pago (PK):** Identificador único del recibo/transacción de cobro.
+
+
+
+**id_venta (FK):** Identificador de la venta que se está abonando. Referencia a `Venta(id_venta)`.  
+
+
+
+**id_metodo (FK):** Identificador del método utilizado para realizar el pago. Referencia a `Metodo_pago(id_metodo)`.  
+
+
+
+**fecha_pago:** Fecha en la que se acreditó el importe.
+
+
+
+**hora_pago:** Hora de registración del cobro.
+
+
+
+**monto:** Importe correspondiente al método de pago utilizado.
+
+
+
+**referencia:** Código de comprobante, número de cupón posnet o identificador de transferencia.
+
+
+
+La clave primaria de `pago` es `id_pago`. `id_venta` e `id_metodo` son claves foráneas.
+
+
+
+
+
+# RESTRICCIONES DE INTEGRIDAD REFERENCIAL
+
+
+
+- `Producto.id_categoria` debe existir previamente en `Categorias.id_categoria`.
+
+- `Compra.id_proveedor` debe existir previamente en `Proveedor.id_proveedor`.
+
+- `Detalle_compra.id_producto` debe existir previamente en `Producto.id_producto`.
+
+- `Detalle_compra.id_compra` debe existir previamente en `Compra.id_compra`.
+
+- `Venta.dni_cliente` debe existir previamente en `Cliente.dni_cliente`.
+
+- `Detalle_venta.id_producto` debe existir previamente en `Producto.id_producto`.
+
+- `Detalle_venta.id_venta` debe existir previamente en `Venta.id_venta`.
+
+- `Pago.id_venta` debe existir previamente en `Venta.id_venta`.
+
+- `Pago.id_metodo` debe existir previamente en `Metodo_pago.id_metodo`.
